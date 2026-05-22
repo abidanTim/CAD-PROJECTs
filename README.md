@@ -18,8 +18,8 @@ It includes parametric models, structural detailing, and automation scripts that
 - Quantity take-offs (BOQ) extracted directly from BIM models
 
 ## 🌍 About Me
-I am **Timothy Tiampati Matayian**, a mechanical engineer and certified welder with strong ICT and CAD expertise.  
-I specialize in **digital transformation, system design, and technical drafting** — bridging engineering and technology to deliver accurate, efficient solutions.
+I am **Timothy Tiampati Matayian**, a mechanical engineer and certified CAD engineer with strong IT and CAD expertise.  
+I specialize in **digital transformation, system design, mechanical design and simulation** — bridging engineering and technology to deliver accurate, efficient solutions.
 
 ## 🚀 Live Portfolio
 View the live site here:  
