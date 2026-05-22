@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timothy Tiamapti – OpenSCAD Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #30363d;
+    --accent: #00d4aa;
+    --accent2: #0ea5e9;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --code-bg: #0d1117;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .badge {
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.3);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 6px 16px;
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 4px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #e6edf3 0%, #00d4aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+
+  .contact-pills {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+  }
+
+  .pill span { color: var(--text); }
+
+  /* PROJECT CARD */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    transition: border-color 0.3s;
+  }
+
+  .project-card:hover { border-color: rgba(0,212,170,0.4); }
+
+  .card-header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .project-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 500px;
+  }
+
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+  .tag {
+    background: rgba(14,165,233,0.1);
+    border: 1px solid rgba(14,165,233,0.25);
+    color: var(--accent2);
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* PREVIEW AREA */
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preview-box {
+    padding: 24px;
+    border-right: 1px solid var(--border);
+  }
+
+  .preview-box:last-child { border-right: none; }
+
+  .preview-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* SVG CAD RENDERS */
+  .cad-render {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #0a0e13;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* CODE BLOCK */
+  .code-section {
+    padding: 0;
+  }
+
+  .code-header {
+    padding: 12px 20px;
+    background: var(--surface2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-filename {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  .copy-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  pre {
+    padding: 24px;
+    overflow-x: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #e6edf3;
+    background: var(--code-bg);
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .num { color: #79c0ff; }
+  .str { color: #a5d6ff; }
+  .cmt { color: #8b949e; font-style: italic; }
+  .var { color: #ffa657; }
+
+  /* SPECS */
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .spec-item {
+    padding: 20px 24px;
+    border-right: 1px solid var(--border);
+  }
+
+  .spec-item:last-child { border-right: none; }
+
+  .spec-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .spec-value { font-size: 15px; font-weight: 500; color: var(--accent); }
+
+  /* SKILLS SECTION */
+  .skills-section { padding: 0 0 60px; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .skill-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .skill-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    animation: fillBar 1.2s ease-out forwards;
+  }
+
+  @keyframes fillBar { from { width: 0; } }
+
+  .skill-desc { font-size: 12px; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    .preview-grid, .specs-grid, .skills-grid { grid-template-columns: 1fr; }
+    .preview-box { border-right: none; border-bottom: 1px solid var(--border); }
+    .spec-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .card-header { flex-direction: column; }
+  }
+
+  /* Scroll animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.6s ease forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; transform: none; } }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">// timothy.tiamapti</div>
+    <div class="badge">OpenSCAD Developer</div>
+  </div>
+</header>
+
+<main>
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero fade-in">
+    <div class="hero-tag">Computational CAD Portfolio</div>
+    <h1>Parametric 3D Design<br>with OpenSCAD</h1>
+    <p class="hero-sub">Mechanical Engineer specialising in script-based parametric CAD modeling. Translating real-world engineering experience into programmatic 2D/3D design.</p>
+    <div class="contact-pills">
+      <div class="pill">📍 <span>Nairobi, Kenya</span></div>
+      <div class="pill">✉️ <span>t.matayian@gmail.com</span></div>
+      <div class="pill">📞 <span>+254 796 228 368</span></div>
+    </div>
+  </section>
+
+  <!-- PROJECT 1 -->
+  <section class="fade-in delay-1">
+    <div class="section-label">Project 01 — Featured Work</div>
+
+    <div class="project-card">
+      <div class="card-header">
+        <div>
+          <div class="project-title">Parametric Aluminium Window Frame</div>
+          <div class="project-desc">A fully parametric window frame system inspired by real fabrication work. All dimensions are configurable variables — change one value and the entire assembly updates automatically.</div>
+          <div class="tags" style="margin-top:12px">
+            <span class="tag">linear_extrude</span>
+            <span class="tag">difference()</span>
+            <span class="tag">union()</span>
+            <span class="tag">for-loop</span>
+            <span class="tag">modules</span>
+            <span class="tag">parametric</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SVG RENDERS -->
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="preview-label">// cross-section profile</div>
+          <div class="cad-render">
+            <svg viewBox="0 0 280 210" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="alum" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#4a9eff;stop-opacity:0.8"/>
+                  <stop offset="100%" style="stop-color:#00d4aa;stop-opacity:0.6"/>
+                </linearGradient>
+              </defs>
+              <!-- Grid lines -->
+              <g stroke="#1a2332" stroke-width="0.5">
+                <line x1="0" y1="30" x2="280" y2="30"/>
+                <line x1="0" y1="60" x2="280" y2="60"/>
+                <line x1="0" y1="90" x2="280" y2="90"/>
+                <line x1="0" y1="120" x2="280" y2="120"/>
+                <line x1="0" y1="150" x2="280" y2="150"/>
+                <line x1="0" y1="180" x2="280" y2="180"/>
+                <line x1="40" y1="0" x2="40" y2="210"/>
+                <line x1="80" y1="0" x2="80" y2="210"/>
+                <line x1="120" y1="0" x2="120" y2="210"/>
+                <line x1="160" y1="0" x2="160" y2="210"/>
+                <line x1="200" y1="0" x2="200" y2="210"/>
+                <line x1="240" y1="0" x2="240" y2="210"/>
+              </g>
+              <!-- Outer frame shape -->
+              <rect x="40" y="30" width="200" height="150" fill="url(#alum)" stroke="#00d4aa" stroke-width="1.5" rx="2"/>
+              <!-- Hollow interior -->
+              <rect x="56" y="46" width="168" height="118" fill="#0a0e13" stroke="#0ea5e9" stroke-width="1" rx="1"/>
+              <!-- Corner detail -->
+              <rect x="40" y="30" width="16" height="16" fill="rgba(0,212,170,0.4)" stroke="#00d4aa" stroke-width="1"/>
+              <rect x="224" y="30" width="16" height="16" fill="rgba(0,212,170,0.4)" stroke="#00d4aa" stroke-width="1"/>
+              <rect x="40" y="164" width="16" height="16" fill="rgba(0,212,170,0.4)" stroke="#00d4aa" stroke-width="1"/>
+              <rect x="224" y="164" width="16" height="16" fill="rgba(0,212,170,0.4)" stroke="#00d4aa" stroke-width="1"/>
+              <!-- Dimension lines -->
+              <g stroke="#ffa657" stroke-width="0.8" stroke-dasharray="3,2">
+                <line x1="10" y1="30" x2="10" y2="180"/>
+                <line x1="6" y1="30" x2="14" y2="30"/>
+                <line x1="6" y1="180" x2="14" y2="180"/>
+              </g>
+              <text x="4" y="110" font-family="Space Mono" font-size="8" fill="#ffa657" transform="rotate(-90,4,110)">150mm</text>
+              <g stroke="#ffa657" stroke-width="0.8" stroke-dasharray="3,2">
+                <line x1="40" y1="200" x2="240" y2="200"/>
+                <line x1="40" y1="196" x2="40" y2="204"/>
+                <line x1="240" y1="196" x2="240" y2="204"/>
+              </g>
+              <text x="120" y="208" font-family="Space Mono" font-size="8" fill="#ffa657" text-anchor="middle">200mm</text>
+              <!-- Label -->
+              <text x="140" y="105" font-family="Space Mono" font-size="9" fill="#8b949e" text-anchor="middle">hollow</text>
+              <text x="140" y="117" font-family="Space Mono" font-size="9" fill="#8b949e" text-anchor="middle">interior</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="preview-box">
+          <div class="preview-label">// 3D isometric view</div>
+          <div class="cad-render">
+            <svg viewBox="0 0 280 210" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="face1" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.7"/>
+                  <stop offset="100%" style="stop-color:#0c7ab8;stop-opacity:0.9"/>
+                </linearGradient>
+                <linearGradient id="face2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#00d4aa;stop-opacity:0.5"/>
+                  <stop offset="100%" style="stop-color:#009e7f;stop-opacity:0.7"/>
+                </linearGradient>
+                <linearGradient id="face3" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#00d4aa;stop-opacity:0.9"/>
+                  <stop offset="100%" style="stop-color:#007a62;stop-opacity:0.8"/>
+                </linearGradient>
+              </defs>
+              <!-- Back faces -->
+              <polygon points="70,50 180,50 230,20 120,20" fill="rgba(14,165,233,0.2)" stroke="#0ea5e9" stroke-width="0.8"/>
+              <polygon points="180,50 230,20 230,110 180,140" fill="rgba(0,212,170,0.2)" stroke="#00d4aa" stroke-width="0.8"/>
+              <!-- Main frame front face -->
+              <polygon points="70,50 180,50 180,140 70,140" fill="url(#face1)" stroke="#0ea5e9" stroke-width="1.5"/>
+              <!-- Top face -->
+              <polygon points="70,50 180,50 230,20 120,20" fill="url(#face3)" stroke="#00d4aa" stroke-width="1.5"/>
+              <!-- Right face -->
+              <polygon points="180,50 230,20 230,110 180,140" fill="url(#face2)" stroke="#00d4aa" stroke-width="1.5"/>
+              <!-- Hollow cutout front -->
+              <polygon points="90,65 160,65 160,125 90,125" fill="#0a0e13" stroke="#79c0ff" stroke-width="1"/>
+              <!-- Hollow cutout top -->
+              <polygon points="90,65 160,65 210,35 140,35" fill="rgba(0,0,0,0.6)" stroke="#79c0ff" stroke-width="0.8"/>
+              <!-- Hollow cutout right -->
+              <polygon points="160,65 210,35 210,95 160,125" fill="rgba(0,0,0,0.5)" stroke="#79c0ff" stroke-width="0.8"/>
+              <!-- Extrusion depth lines -->
+              <line x1="70" y1="50" x2="120" y2="20" stroke="#00d4aa" stroke-width="0.8" stroke-dasharray="3,2"/>
+              <line x1="70" y1="140" x2="120" y2="110" stroke="#00d4aa" stroke-width="0.8" stroke-dasharray="3,2"/>
+              <!-- Dimension arrow -->
+              <text x="235" y="68" font-family="Space Mono" font-size="8" fill="#ffa657">depth:</text>
+              <text x="235" y="78" font-family="Space Mono" font-size="8" fill="#ffa657">2000mm</text>
+              <line x1="230" y1="20" x2="230" y2="110" stroke="#ffa657" stroke-width="0.8" stroke-dasharray="2,2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- CODE -->
+      <div class="code-section">
+        <div class="code-header">
+          <span class="code-filename">aluminium_window_frame.scad</span>
+          <button class="copy-btn" onclick="copyCode()">copy code</button>
+        </div>
+        <pre id="scadCode"><span class="cmt">// ============================================================
+// PARAMETRIC ALUMINIUM WINDOW FRAME
+// Author  : Timothy Tiamapti
+// Version : 1.0
+// Description: Fully parametric window frame with configurable
+//              dimensions, wall thickness, and corner style.
+//              Inspired by real fabrication work (ESILON Construction).
+// Usage: Adjust parameters below and render with F5/F6
+// ============================================================</span>
+
+<span class="cmt">// ── PARAMETERS ─────────────────────────────────────────────</span>
+<span class="var">frame_width</span>      = <span class="num">200</span>;   <span class="cmt">// Overall width in mm</span>
+<span class="var">frame_height</span>     = <span class="num">150</span>;   <span class="cmt">// Overall height in mm</span>
+<span class="var">frame_depth</span>      = <span class="num">60</span>;    <span class="cmt">// Extrusion depth in mm</span>
+<span class="var">wall_thickness</span>   = <span class="num">4</span>;     <span class="cmt">// Wall thickness in mm</span>
+<span class="var">corner_radius</span>    = <span class="num">2</span>;     <span class="cmt">// Corner radius (0 = sharp)</span>
+<span class="var">num_dividers</span>     = <span class="num">1</span>;     <span class="cmt">// Number of horizontal dividers</span>
+<span class="var">divider_thickness</span> = <span class="num">3</span>;   <span class="cmt">// Divider thickness in mm</span>
+<span class="var">fn</span>               = <span class="num">64</span>;   <span class="cmt">// Smoothness for curves</span>
+
+<span class="cmt">// ── COMPUTED VALUES ─────────────────────────────────────────</span>
+<span class="var">inner_w</span> = <span class="var">frame_width</span>  - <span class="num">2</span> * <span class="var">wall_thickness</span>;
+<span class="var">inner_h</span> = <span class="var">frame_height</span> - <span class="num">2</span> * <span class="var">wall_thickness</span>;
+
+<span class="cmt">// ── MODULE: Rounded Rectangle Profile ───────────────────────</span>
+<span class="kw">module</span> <span class="fn">rounded_rect</span>(<span class="var">w</span>, <span class="var">h</span>, <span class="var">r</span>) {
+    <span class="kw">if</span> (<span class="var">r</span> > <span class="num">0</span>) {
+        <span class="fn">minkowski</span>() {
+            <span class="fn">square</span>([<span class="var">w</span> - <span class="num">2</span>*<span class="var">r</span>, <span class="var">h</span> - <span class="num">2</span>*<span class="var">r</span>], <span class="var">center</span>=<span class="kw">true</span>);
+            <span class="fn">circle</span>(<span class="var">r</span>, <span class="var">$fn</span>=<span class="var">fn</span>);
+        }
+    } <span class="kw">else</span> {
+        <span class="fn">square</span>([<span class="var">w</span>, <span class="var">h</span>], <span class="var">center</span>=<span class="kw">true</span>);
+    }
+}
+
+<span class="cmt">// ── MODULE: Frame Outer Shell ────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">frame_shell</span>() {
+    <span class="fn">linear_extrude</span>(<span class="var">height</span>=<span class="var">frame_depth</span>) {
+        <span class="fn">difference</span>() {
+            <span class="cmt">// Outer profile</span>
+            <span class="fn">rounded_rect</span>(<span class="var">frame_width</span>, <span class="var">frame_height</span>, <span class="var">corner_radius</span>);
+            <span class="cmt">// Inner hollow cutout</span>
+            <span class="fn">rounded_rect</span>(<span class="var">inner_w</span>, <span class="var">inner_h</span>, <span class="kw">max</span>(<span class="num">0</span>, <span class="var">corner_radius</span>-<span class="var">wall_thickness</span>));
+        }
+    }
+}
+
+<span class="cmt">// ── MODULE: Horizontal Dividers ──────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">dividers</span>() {
+    <span class="fn">spacing</span> = <span class="var">frame_height</span> / (<span class="var">num_dividers</span> + <span class="num">1</span>);
+    <span class="kw">for</span> (<span class="var">i</span> = [<span class="num">1</span> : <span class="var">num_dividers</span>]) {
+        <span class="var">y_pos</span> = -<span class="var">frame_height</span>/<span class="num">2</span> + <span class="var">i</span> * <span class="fn">spacing</span>;
+        <span class="fn">translate</span>([<span class="num">0</span>, <span class="var">y_pos</span>, <span class="var">frame_depth</span>/<span class="num">2</span>])
+            <span class="fn">cube</span>([<span class="var">inner_w</span>, <span class="var">divider_thickness</span>, <span class="var">frame_depth</span>], <span class="var">center</span>=<span class="kw">true</span>);
+    }
+}
+
+<span class="cmt">// ── MAIN ASSEMBLY ────────────────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">window_frame</span>() {
+    <span class="fn">color</span>(<span class="str">"silver"</span>, <span class="num">0.9</span>)
+    <span class="fn">union</span>() {
+        <span class="fn">frame_shell</span>();
+        <span class="fn">dividers</span>();
+    }
+}
+
+<span class="cmt">// ── RENDER ───────────────────────────────────────────────────</span>
+<span class="fn">window_frame</span>();
+
+<span class="cmt">// ── OPTIONAL: View cross-section (uncomment to use)
+// projection(cut=true) translate([0,0,-1]) window_frame();</span>
+</pre>
+      </div>
+
+      <!-- SPECS -->
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-label">Default Size</div>
+          <div class="spec-value">200 × 150 × 60 mm</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Wall Thickness</div>
+          <div class="spec-value">4 mm (parametric)</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Key Techniques</div>
+          <div class="spec-value">linear_extrude, minkowski, for-loop</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROJECT 2 -->
+  <section class="fade-in delay-2" style="margin-bottom:48px">
+    <div class="section-label">Project 02 — Architectural Model</div>
+    <div class="project-card">
+      <div class="card-header">
+        <div>
+          <div class="project-title">Parametric Cowshed v2.0 — Full Agricultural Complex</div>
+          <div class="project-desc">A fully parametric agricultural complex for 10 cows. Features individual stalls, worker path, feeding &amp; water troughs, ventilated 3/4 walls, entrance gates, pitched roof with structural trusses, aluminium window frames, concrete foundation slab, rainwater gutters, downpipe, and a cylindrical collection tank with inlet and outlet. Every dimension is parameter-driven.</div>
+          <div class="tags" style="margin-top:12px">
+            <span class="tag">modules</span>
+            <span class="tag">for-loop</span>
+            <span class="tag">difference()</span>
+            <span class="tag">polygon()</span>
+            <span class="tag">linear_extrude</span>
+            <span class="tag">rotate()</span>
+            <span class="tag">color()</span>
+            <span class="tag">parametric</span>
+            <span class="tag">foundation</span>
+            <span class="tag">trusses</span>
+            <span class="tag">gutters</span>
+            <span class="tag">water tank</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div class="preview-label">// floor plan layout</div>
+          <div class="cad-render">
+            <svg viewBox="0 0 310 240" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arr1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L6,3 z" fill="#ffa657"/>
+                </marker>
+                <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
+                  <path d="M0,0 L0,6 L6,3 z" fill="#ffa657"/>
+                </marker>
+              </defs>
+              <rect width="310" height="240" fill="#0a0e13"/>
+              <!-- grid -->
+              <g stroke="#1a2332" stroke-width="0.4">
+                <line x1="30" y1="42" x2="275" y2="42"/><line x1="30" y1="84" x2="275" y2="84"/>
+                <line x1="30" y1="126" x2="275" y2="126"/><line x1="30" y1="168" x2="275" y2="168"/>
+                <line x1="56" y1="15" x2="56" y2="210"/><line x1="100" y1="15" x2="100" y2="210"/>
+                <line x1="144" y1="15" x2="144" y2="210"/><line x1="188" y1="15" x2="188" y2="210"/>
+                <line x1="232" y1="15" x2="232" y2="210"/>
+              </g>
+              <!-- outer walls -->
+              <rect x="30" y="18" width="240" height="180" fill="none" stroke="#00d4aa" stroke-width="2"/>
+              <!-- feeding trough -->
+              <rect x="35" y="21" width="230" height="11" fill="rgba(139,90,43,0.7)" stroke="#8b5a2b" stroke-width="1"/>
+              <text x="150" y="29" font-family="Courier" font-size="6" fill="#ffa657" text-anchor="middle">FEEDING TROUGH</text>
+              <!-- top stalls -->
+              <g fill="rgba(210,180,140,0.4)" stroke="#00d4aa" stroke-width="0.8">
+                <rect x="30" y="32" width="44" height="50"/><rect x="74" y="32" width="44" height="50"/>
+                <rect x="118" y="32" width="44" height="50"/><rect x="162" y="32" width="44" height="50"/>
+                <rect x="206" y="32" width="44" height="50"/>
+              </g>
+              <g font-family="Courier" font-size="8" text-anchor="middle" fill="#ffa657">
+                <text x="52" y="60">C1</text><text x="96" y="60">C2</text>
+                <text x="140" y="60">C3</text><text x="184" y="60">C4</text><text x="228" y="60">C5</text>
+              </g>
+              <!-- worker path -->
+              <rect x="30" y="82" width="240" height="50" fill="rgba(100,100,100,0.35)" stroke="#8b949e" stroke-width="1" stroke-dasharray="4,2"/>
+              <text x="150" y="110" font-family="Courier" font-size="7" fill="#8b949e" text-anchor="middle">WORKER PATH</text>
+              <!-- bottom stalls -->
+              <g fill="rgba(210,180,140,0.4)" stroke="#00d4aa" stroke-width="0.8">
+                <rect x="30" y="132" width="44" height="50"/><rect x="74" y="132" width="44" height="50"/>
+                <rect x="118" y="132" width="44" height="50"/><rect x="162" y="132" width="44" height="50"/>
+                <rect x="206" y="132" width="44" height="50"/>
+              </g>
+              <g font-family="Courier" font-size="8" text-anchor="middle" fill="#ffa657">
+                <text x="52" y="160">C6</text><text x="96" y="160">C7</text>
+                <text x="140" y="160">C8</text><text x="184" y="160">C9</text><text x="228" y="160">C10</text>
+              </g>
+              <!-- water trough -->
+              <rect x="35" y="183" width="230" height="12" fill="rgba(14,165,233,0.6)" stroke="#0ea5e9" stroke-width="1"/>
+              <text x="150" y="192" font-family="Courier" font-size="6" fill="#79c0ff" text-anchor="middle">WATER TROUGH</text>
+              <!-- gates -->
+              <rect x="22" y="90" width="10" height="34" fill="#0d1117" stroke="#00d4aa" stroke-width="0.8"/>
+              <rect x="268" y="90" width="10" height="34" fill="#0d1117" stroke="#00d4aa" stroke-width="0.8"/>
+
+              <!-- === DIMENSION LINES === -->
+              <!-- Total width: 750mm -->
+              <line x1="30" y1="212" x2="270" y2="212" stroke="#ffa657" stroke-width="0.8" marker-start="url(#arr2)" marker-end="url(#arr1)"/>
+              <line x1="30" y1="208" x2="30" y2="216" stroke="#ffa657" stroke-width="0.8"/>
+              <line x1="270" y1="208" x2="270" y2="216" stroke="#ffa657" stroke-width="0.8"/>
+              <text x="150" y="221" font-family="Courier" font-size="7" fill="#ffa657" text-anchor="middle">750mm (5 stalls)</text>
+
+              <!-- Total depth: 720mm -->
+              <line x1="278" y1="18" x2="278" y2="198" stroke="#ffa657" stroke-width="0.8" marker-start="url(#arr2)" marker-end="url(#arr1)"/>
+              <line x1="274" y1="18" x2="282" y2="18" stroke="#ffa657" stroke-width="0.8"/>
+              <line x1="274" y1="198" x2="282" y2="198" stroke="#ffa657" stroke-width="0.8"/>
+              <text x="295" y="112" font-family="Courier" font-size="6" fill="#ffa657" text-anchor="middle" transform="rotate(90,295,112)">720mm total</text>
+
+              <!-- Stall width: 150mm -->
+              <line x1="30" y1="228" x2="74" y2="228" stroke="#0ea5e9" stroke-width="0.8" marker-start="url(#arr2)" marker-end="url(#arr1)"/>
+              <text x="52" y="236" font-family="Courier" font-size="6" fill="#0ea5e9" text-anchor="middle">150mm</text>
+
+              <!-- Stall depth: 250mm -->
+              <line x1="285" y1="32" x2="285" y2="82" stroke="#0ea5e9" stroke-width="0.8" marker-start="url(#arr2)" marker-end="url(#arr1)"/>
+              <text x="300" y="60" font-family="Courier" font-size="6" fill="#0ea5e9" text-anchor="middle" transform="rotate(90,300,60)">250mm</text>
+
+              <!-- Path width: 120mm -->
+              <line x1="285" y1="82" x2="285" y2="132" stroke="#8b949e" stroke-width="0.8" marker-start="url(#arr2)" marker-end="url(#arr1)"/>
+              <text x="300" y="110" font-family="Courier" font-size="6" fill="#8b949e" text-anchor="middle" transform="rotate(90,300,110)">120mm</text>
+
+              <!-- Wall height label -->
+              <text x="6" y="110" font-family="Courier" font-size="6" fill="#d2a8ff" text-anchor="middle" transform="rotate(-90,6,110)">h=200mm</text>
+
+              <!-- Gate width -->
+              <line x1="22" y1="89" x2="32" y2="89" stroke="#00d4aa" stroke-width="0.6" stroke-dasharray="2,1"/>
+              <line x1="22" y1="124" x2="32" y2="124" stroke="#00d4aa" stroke-width="0.6" stroke-dasharray="2,1"/>
+              <text x="14" y="108" font-family="Courier" font-size="5.5" fill="#00d4aa" text-anchor="middle" transform="rotate(-90,14,108)">150mm gate</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="preview-box">
+          <div class="preview-label">// 3D isometric view</div>
+          <div class="cad-render">
+            <svg viewBox="0 0 310 230" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrI1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L6,3 z" fill="#ffa657"/>
+                </marker>
+                <marker id="arrI2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
+                  <path d="M0,0 L0,6 L6,3 z" fill="#ffa657"/>
+                </marker>
+              </defs>
+              <rect width="310" height="230" fill="#0a0e13"/>
+              <!-- shadow -->
+              <ellipse cx="155" cy="195" rx="105" ry="9" fill="rgba(0,0,0,0.4)"/>
+              <!-- back face -->
+              <polygon points="75,150 215,150 235,120 95,120" fill="rgba(160,130,90,0.35)" stroke="#c4a47c" stroke-width="0.8"/>
+              <!-- right side -->
+              <polygon points="215,150 235,120 235,63 215,93" fill="rgba(130,100,60,0.45)" stroke="#c4a47c" stroke-width="0.8"/>
+              <!-- front wall -->
+              <polygon points="75,150 75,90 215,90 215,150" fill="rgba(210,180,140,0.75)" stroke="#00d4aa" stroke-width="1.5"/>
+              <!-- top of wall -->
+              <polygon points="75,90 95,60 235,60 215,90" fill="rgba(180,150,110,0.6)" stroke="#00d4aa" stroke-width="1"/>
+              <!-- gate -->
+              <polygon points="143,150 157,150 157,117 143,117" fill="#0a0e13" stroke="#00d4aa" stroke-width="1"/>
+              <!-- stall dividers -->
+              <g stroke="#00d4aa" stroke-width="0.6" opacity="0.6">
+                <line x1="103" y1="90" x2="103" y2="150"/>
+                <line x1="131" y1="90" x2="131" y2="150"/>
+                <line x1="159" y1="90" x2="159" y2="150"/>
+                <line x1="187" y1="90" x2="187" y2="150"/>
+              </g>
+              <!-- ventilation strip -->
+              <polygon points="75,90 95,60 235,60 215,90" fill="rgba(0,212,170,0.04)" stroke="#00d4aa" stroke-width="0.5" stroke-dasharray="3,2"/>
+              <!-- window frames on front wall -->
+              <g stroke="#aaaaaa" stroke-width="1" fill="rgba(150,200,255,0.15)">
+                <rect x="83" y="108" width="14" height="12"/>
+                <rect x="111" y="108" width="14" height="12"/>
+                <rect x="167" y="108" width="14" height="12"/>
+                <rect x="195" y="108" width="14" height="12"/>
+              </g>
+              <!-- foundation slab -->
+              <polygon points="68,153 222,153 242,123 88,123" fill="rgba(200,200,200,0.3)" stroke="#aaaaaa" stroke-width="0.8"/>
+              <!-- gutters -->
+              <rect x="68" y="88" width="150" height="3" fill="rgba(70,130,180,0.8)" stroke="#4682b4" stroke-width="0.6"/>
+              <!-- left roof -->
+              <polygon points="62,55 150,27 150,63 62,91" fill="rgba(220,50,50,0.85)" stroke="#ff6666" stroke-width="1.2"/>
+              <!-- right roof -->
+              <polygon points="150,27 238,55 238,91 150,63" fill="rgba(170,30,30,0.8)" stroke="#ff4444" stroke-width="1.2"/>
+              <!-- ridge -->
+              <line x1="150" y1="27" x2="150" y2="63" stroke="#ffaaaa" stroke-width="2"/>
+              <!-- roof base -->
+              <line x1="62" y1="91" x2="238" y2="91" stroke="#ff6666" stroke-width="1"/>
+              <!-- truss hint -->
+              <g stroke="rgba(139,90,43,0.6)" stroke-width="0.8">
+                <line x1="110" y1="91" x2="150" y2="63"/><line x1="110" y1="91" x2="150" y2="75"/>
+                <line x1="190" y1="91" x2="150" y2="63"/><line x1="190" y1="91" x2="150" y2="75"/>
+                <line x1="110" y1="91" x2="190" y2="91"/>
+              </g>
+              <!-- water tank -->
+              <ellipse cx="258" cy="135" rx="14" ry="5" fill="rgba(0,100,0,0.6)" stroke="#006400" stroke-width="0.8"/>
+              <rect x="244" y="135" width="28" height="35" fill="rgba(0,100,0,0.5)" stroke="#006400" stroke-width="0.8"/>
+              <ellipse cx="258" cy="170" rx="14" ry="5" fill="rgba(0,80,0,0.8)" stroke="#006400" stroke-width="0.8"/>
+              <line x1="244" y1="91" x2="244" y2="135" stroke="#4682b4" stroke-width="1.5"/>
+              <!-- labels -->
+              <text x="150" y="21" font-family="Courier" font-size="6" fill="#ff9999" text-anchor="middle">PITCHED ROOF</text>
+              <text x="150" y="99" font-family="Courier" font-size="5.5" fill="#79c0ff" text-anchor="middle">GUTTER</text>
+              <text x="258" y="132" font-family="Courier" font-size="5.5" fill="#00d4aa" text-anchor="middle">TANK</text>
+              <text x="72" y="160" font-family="Courier" font-size="5.5" fill="#aaaaaa">FOUNDATION</text>
+
+              <!-- === ELEVATION DIMENSIONS === -->
+              <!-- Wall height 200mm -->
+              <line x1="50" y1="90" x2="50" y2="150" stroke="#ffa657" stroke-width="0.8" marker-start="url(#arrI2)" marker-end="url(#arrI1)"/>
+              <text x="44" y="123" font-family="Courier" font-size="6" fill="#ffa657" text-anchor="middle" transform="rotate(-90,44,123)">200mm</text>
+              <!-- Roof height 50mm -->
+              <line x1="50" y1="63" x2="50" y2="90" stroke="#ff9999" stroke-width="0.8" marker-start="url(#arrI2)" marker-end="url(#arrI1)"/>
+              <text x="40" y="78" font-family="Courier" font-size="5.5" fill="#ff9999" text-anchor="middle" transform="rotate(-90,40,78)">50mm</text>
+              <!-- Foundation 15mm -->
+              <line x1="50" y1="150" x2="50" y2="157" stroke="#aaaaaa" stroke-width="0.8" marker-start="url(#arrI2)" marker-end="url(#arrI1)"/>
+              <text x="38" y="155" font-family="Courier" font-size="5" fill="#aaaaaa">15mm slab</text>
+              <!-- Total width -->
+              <line x1="62" y1="210" x2="238" y2="210" stroke="#ffa657" stroke-width="0.8" marker-start="url(#arrI2)" marker-end="url(#arrI1)"/>
+              <line x1="62" y1="206" x2="62" y2="214" stroke="#ffa657" stroke-width="0.8"/>
+              <line x1="238" y1="206" x2="238" y2="214" stroke="#ffa657" stroke-width="0.8"/>
+              <text x="150" y="220" font-family="Courier" font-size="6.5" fill="#ffa657" text-anchor="middle">750mm total width</text>
+              <!-- Gate height -->
+              <line x1="235" y1="117" x2="235" y2="150" stroke="#00d4aa" stroke-width="0.7" marker-start="url(#arrI2)" marker-end="url(#arrI1)"/>
+              <text x="248" y="136" font-family="Courier" font-size="5.5" fill="#00d4aa">150mm gate</text>
+              <!-- Window label -->
+              <line x1="97" y1="107" x2="97" y2="100" stroke="#aaaaaa" stroke-width="0.6"/>
+              <text x="97" y="98" font-family="Courier" font-size="5" fill="#aaaaaa" text-anchor="middle">60×50mm win</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <div class="code-header">
+          <span class="code-filename">cowshed_timothy.scad</span>
+          <button class="copy-btn" onclick="copyCowshedCode()">copy code</button>
+        </div>
+        <pre style="max-height:500px"><span class="cmt">// ============================================================
+// PARAMETRIC COWSHED v2.0 — Timothy Tiamapti
+// Features: 10 stalls, worker path, feeding &amp; water troughs,
+//   3/4 ventilated walls, entrance gates, pitched roof,
+//   roof trusses, window frames, foundation slab,
+//   gutters, rainwater collection tank
+// ============================================================</span>
+
+<span class="cmt">// ── PARAMETERS ─────────────────────────────────────────────</span>
+<span class="var">stall_w</span>=<span class="num">150</span>; <span class="var">stall_d</span>=<span class="num">250</span>; <span class="var">stall_h</span>=<span class="num">200</span>; <span class="var">wall_t</span>=<span class="num">10</span>;
+<span class="var">num_stalls</span>=<span class="num">5</span>; <span class="var">path_w</span>=<span class="num">120</span>; <span class="var">water_d</span>=<span class="num">80</span>;
+<span class="var">found_t</span>=<span class="num">15</span>;   <span class="cmt">// foundation thickness</span>
+<span class="var">found_ext</span>=<span class="num">20</span>; <span class="cmt">// foundation overhang</span>
+<span class="var">tank_r</span>=<span class="num">80</span>;    <span class="cmt">// water tank radius</span>
+<span class="var">tank_h</span>=<span class="num">200</span>;   <span class="cmt">// water tank height</span>
+<span class="var">gutter_w</span>=<span class="num">15</span>; <span class="var">gutter_h</span>=<span class="num">10</span>; <span class="cmt">// gutter dimensions</span>
+<span class="var">win_w</span>=<span class="num">60</span>; <span class="var">win_h</span>=<span class="num">50</span>; <span class="cmt">// window size</span>
+<span class="var">shed_w</span> = <span class="var">num_stalls</span>*<span class="var">stall_w</span> + <span class="num">2</span>*<span class="var">wall_t</span>;
+<span class="var">shed_d</span> = <span class="num">2</span>*<span class="var">stall_d</span> + <span class="var">path_w</span> + <span class="num">2</span>*<span class="var">wall_t</span>;
+
+<span class="cmt">// ── FOUNDATION SLAB ─────────────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">foundation</span>() {
+  <span class="fn">color</span>(<span class="str">"lightgray"</span>)
+  <span class="fn">translate</span>([-<span class="var">found_ext</span>,-<span class="var">found_ext</span>,-<span class="var">found_t</span>])
+    <span class="fn">cube</span>([<span class="var">shed_w</span>+<span class="num">2</span>*<span class="var">found_ext</span>, <span class="var">shed_d</span>+<span class="num">2</span>*<span class="var">found_ext</span>, <span class="var">found_t</span>]);
+}
+
+<span class="cmt">// ── WINDOW FRAME MODULE ──────────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">window_frame</span>(<span class="var">w</span>, <span class="var">h</span>) {
+  <span class="fn">color</span>(<span class="str">"silver"</span>)
+  <span class="fn">difference</span>() {
+    <span class="fn">cube</span>([<span class="var">w</span>, <span class="var">wall_t</span>+<span class="num">2</span>, <span class="var">h</span>]);
+    <span class="fn">translate</span>([<span class="num">3</span>, -<span class="num">1</span>, <span class="num">3</span>])
+      <span class="fn">cube</span>([<span class="var">w</span>-<span class="num">6</span>, <span class="var">wall_t</span>+<span class="num">4</span>, <span class="var">h</span>-<span class="num">6</span>]);
+  }
+  <span class="cmt">// centre divider</span>
+  <span class="fn">translate</span>([<span class="var">w</span>/<span class="num">2</span>-<span class="num">1.5</span>, -<span class="num">1</span>, <span class="num">3</span>])
+    <span class="fn">cube</span>([<span class="num">3</span>, <span class="var">wall_t</span>+<span class="num">4</span>, <span class="var">h</span>-<span class="num">6</span>]);
+}
+
+<span class="cmt">// ── PLACE WINDOWS ON LONG WALLS ─────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">all_windows</span>() {
+  <span class="var">win_z</span> = <span class="var">stall_h</span>*<span class="num">0.35</span>;
+  <span class="cmt">// front wall windows — one per stall</span>
+  <span class="kw">for</span>(<span class="var">i</span>=[<span class="num">0</span>:<span class="var">num_stalls</span>-<span class="num">1</span>]) {
+    <span class="fn">translate</span>([<span class="var">wall_t</span>+<span class="var">i</span>*<span class="var">stall_w</span>+(<span class="var">stall_w</span>-<span class="var">win_w</span>)/<span class="num">2</span>,
+               -<span class="num">1</span>, <span class="var">win_z</span>])
+      <span class="fn">window_frame</span>(<span class="var">win_w</span>, <span class="var">win_h</span>);
+  }
+  <span class="cmt">// back wall windows</span>
+  <span class="kw">for</span>(<span class="var">i</span>=[<span class="num">0</span>:<span class="var">num_stalls</span>-<span class="num">1</span>]) {
+    <span class="fn">translate</span>([<span class="var">wall_t</span>+<span class="var">i</span>*<span class="var">stall_w</span>+(<span class="var">stall_w</span>-<span class="var">win_w</span>)/<span class="num">2</span>,
+               <span class="var">shed_d</span>-<span class="var">wall_t</span>-<span class="num">1</span>, <span class="var">win_z</span>])
+      <span class="fn">window_frame</span>(<span class="var">win_w</span>, <span class="var">win_h</span>);
+  }
+}
+
+<span class="cmt">// ── ROOF TRUSS MODULE ────────────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">truss</span>() {
+  <span class="fn">color</span>(<span class="str">"saddlebrown"</span>)
+  <span class="var">tw</span> = <span class="var">shed_d</span>; <span class="var">th</span> = <span class="var">shed_d</span>/<span class="num">4</span>; <span class="var">tb</span> = <span class="num">8</span>;
+  <span class="fn">union</span>() {
+    <span class="cmt">// left rafter</span>
+    <span class="fn">rotate</span>([<span class="num">0</span>, <span class="num">0</span>, <span class="num">0</span>])
+    <span class="fn">linear_extrude</span>(<span class="var">height</span>=<span class="var">tb</span>)
+      <span class="fn">polygon</span>([[<span class="num">0</span>,<span class="num">0</span>],[<span class="var">tw</span>/<span class="num">2</span>,<span class="var">th</span>],[<span class="var">tw</span>/<span class="num">2</span>-<span class="var">tb</span>,<span class="var">th</span>],[<span class="var">tb</span>,<span class="num">0</span>]]);
+    <span class="cmt">// right rafter</span>
+    <span class="fn">linear_extrude</span>(<span class="var">height</span>=<span class="var">tb</span>)
+      <span class="fn">polygon</span>([[<span class="var">tw</span>,<span class="num">0</span>],[<span class="var">tw</span>/<span class="num">2</span>,<span class="var">th</span>],[<span class="var">tw</span>/<span class="num">2</span>+<span class="var">tb</span>,<span class="var">th</span>],[<span class="var">tw</span>-<span class="var">tb</span>,<span class="num">0</span>]]);
+    <span class="cmt">// bottom chord (tie beam)</span>
+    <span class="fn">cube</span>([<span class="var">tw</span>, <span class="var">tb</span>, <span class="var">tb</span>]);
+    <span class="cmt">// vertical king post</span>
+    <span class="fn">translate</span>([<span class="var">tw</span>/<span class="num">2</span>-<span class="var">tb</span>/<span class="num">2</span>, <span class="num">0</span>, <span class="num">0</span>])
+      <span class="fn">cube</span>([<span class="var">tb</span>, <span class="var">tb</span>, <span class="var">th</span>]);
+    <span class="cmt">// diagonal struts</span>
+    <span class="fn">linear_extrude</span>(<span class="var">height</span>=<span class="var">tb</span>)
+      <span class="fn">polygon</span>([[<span class="var">tw</span>/<span class="num">4</span>,<span class="num">0</span>],[<span class="var">tw</span>/<span class="num">2</span>,<span class="var">th</span>/<span class="num">2</span>],[<span class="var">tw</span>/<span class="num">2</span>,<span class="var">th</span>/<span class="num">2</span>-<span class="var">tb</span>],[<span class="var">tw</span>/<span class="num">4</span>+<span class="var">tb</span>,<span class="num">0</span>]]);
+    <span class="fn">linear_extrude</span>(<span class="var">height</span>=<span class="var">tb</span>)
+      <span class="fn">polygon</span>([[<span class="var">tw</span>*<span class="num">3</span>/<span class="num">4</span>,<span class="num">0</span>],[<span class="var">tw</span>/<span class="num">2</span>,<span class="var">th</span>/<span class="num">2</span>],[<span class="var">tw</span>/<span class="num">2</span>,<span class="var">th</span>/<span class="num">2</span>-<span class="var">tb</span>],[<span class="var">tw</span>*<span class="num">3</span>/<span class="num">4</span>-<span class="var">tb</span>,<span class="num">0</span>]]);
+  }
+}
+
+<span class="cmt">// ── PLACE TRUSSES ALONG ROOF ─────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">roof_trusses</span>() {
+  <span class="var">spacing</span> = <span class="var">shed_w</span> / (<span class="var">num_stalls</span>+<span class="num">1</span>);
+  <span class="kw">for</span>(<span class="var">i</span>=[<span class="num">1</span>:<span class="var">num_stalls</span>]) {
+    <span class="fn">translate</span>([<span class="var">i</span>*<span class="var">spacing</span>-<span class="num">4</span>, <span class="num">0</span>, <span class="var">stall_h</span>+<span class="num">10</span>])
+      <span class="fn">rotate</span>([<span class="num">90</span>,<span class="num">0</span>,<span class="num">90</span>]) <span class="fn">truss</span>();
+  }
+}
+
+<span class="cmt">// ── GUTTERS ──────────────────────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">gutter</span>(<span class="var">length</span>) {
+  <span class="fn">color</span>(<span class="str">"steelblue"</span>)
+  <span class="fn">difference</span>() {
+    <span class="fn">cube</span>([<span class="var">length</span>, <span class="var">gutter_w</span>, <span class="var">gutter_h</span>]);
+    <span class="fn">translate</span>([<span class="num">0</span>, <span class="num">2</span>, <span class="num">2</span>])
+      <span class="fn">cube</span>([<span class="var">length</span>, <span class="var">gutter_w</span>-<span class="num">4</span>, <span class="var">gutter_h</span>]);
+  }
+}
+
+<span class="kw">module</span> <span class="fn">all_gutters</span>() {
+  <span class="var">gutter_z</span> = <span class="var">stall_h</span> - <span class="num">5</span>;
+  <span class="cmt">// front gutter</span>
+  <span class="fn">translate</span>([<span class="num">0</span>, -<span class="var">gutter_w</span>, <span class="var">gutter_z</span>])
+    <span class="fn">gutter</span>(<span class="var">shed_w</span>);
+  <span class="cmt">// back gutter</span>
+  <span class="fn">translate</span>([<span class="num">0</span>, <span class="var">shed_d</span>, <span class="var">gutter_z</span>])
+    <span class="fn">gutter</span>(<span class="var">shed_w</span>);
+  <span class="cmt">// downpipe to tank (front right corner)</span>
+  <span class="fn">color</span>(<span class="str">"steelblue"</span>)
+  <span class="fn">translate</span>([<span class="var">shed_w</span>-<span class="var">gutter_w</span>, -<span class="var">gutter_w</span>, <span class="num">0</span>])
+    <span class="fn">cube</span>([<span class="var">gutter_w</span>, <span class="var">gutter_w</span>, <span class="var">gutter_z</span>]);
+}
+
+<span class="cmt">// ── RAINWATER TANK ───────────────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">water_tank</span>() {
+  <span class="fn">color</span>(<span class="str">"darkgreen"</span>, <span class="num">0.85</span>)
+  <span class="fn">translate</span>([<span class="var">shed_w</span>+<span class="num">30</span>, <span class="num">0</span>, <span class="num">0</span>]) {
+    <span class="cmt">// tank body</span>
+    <span class="fn">difference</span>() {
+      <span class="fn">cylinder</span>(<span class="var">h</span>=<span class="var">tank_h</span>, <span class="var">r</span>=<span class="var">tank_r</span>, <span class="var">$fn</span>=<span class="num">64</span>);
+      <span class="fn">translate</span>([<span class="num">0</span>,<span class="num">0</span>,<span class="num">5</span>])
+        <span class="fn">cylinder</span>(<span class="var">h</span>=<span class="var">tank_h</span>, <span class="var">r</span>=<span class="var">tank_r</span>-<span class="num">5</span>, <span class="var">$fn</span>=<span class="num">64</span>);
+    }
+    <span class="cmt">// tank lid</span>
+    <span class="fn">color</span>(<span class="str">"darkgreen"</span>)
+    <span class="fn">translate</span>([<span class="num">0</span>,<span class="num">0</span>,<span class="var">tank_h</span>])
+      <span class="fn">cylinder</span>(<span class="var">h</span>=<span class="num">8</span>, <span class="var">r</span>=<span class="var">tank_r</span>+<span class="num">2</span>, <span class="var">$fn</span>=<span class="num">64</span>);
+    <span class="cmt">// inlet pipe from gutter</span>
+    <span class="fn">color</span>(<span class="str">"steelblue"</span>)
+    <span class="fn">translate</span>([-<span class="var">tank_r</span>-<span class="num">30</span>, <span class="num">0</span>, <span class="var">tank_h</span>-<span class="num">20</span>])
+      <span class="fn">rotate</span>([<span class="num">0</span>,<span class="num">90</span>,<span class="num">0</span>])
+        <span class="fn">cylinder</span>(<span class="var">h</span>=<span class="num">30</span>, <span class="var">r</span>=<span class="num">6</span>, <span class="var">$fn</span>=<span class="num">32</span>);
+    <span class="cmt">// outlet tap at base</span>
+    <span class="fn">color</span>(<span class="str">"silver"</span>)
+    <span class="fn">translate</span>([-<span class="var">tank_r</span>-<span class="num">10</span>, <span class="num">0</span>, <span class="num">20</span>])
+      <span class="fn">rotate</span>([<span class="num">0</span>,<span class="num">90</span>,<span class="num">0</span>])
+        <span class="fn">cylinder</span>(<span class="var">h</span>=<span class="num">12</span>, <span class="var">r</span>=<span class="num">4</span>, <span class="var">$fn</span>=<span class="num">32</span>);
+  }
+}
+
+<span class="cmt">// ── EXISTING MODULES (walls, stalls, path, troughs, roof) ────</span>
+<span class="cmt">// ... (same as v1.0) ...</span>
+
+<span class="cmt">// ── MAIN ASSEMBLY v2.0 ───────────────────────────────────────</span>
+<span class="kw">module</span> <span class="fn">cowshed_v2</span>() {
+  <span class="fn">foundation</span>();
+  <span class="fn">shed_walls</span>();
+  <span class="fn">left_stalls</span>();   <span class="fn">right_stalls</span>();
+  <span class="fn">worker_path</span>();
+  <span class="fn">water_trough</span>();  <span class="fn">feeding_trough</span>();
+  <span class="fn">all_windows</span>();
+  <span class="fn">roof</span>();
+  <span class="fn">roof_trusses</span>();
+  <span class="fn">all_gutters</span>();
+  <span class="fn">water_tank</span>();
+}
+
+<span class="fn">cowshed_v2</span>();
+
+</pre>
+      </div>
+
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-label">Capacity</div>
+          <div class="spec-value">10 Cows (5 × 2 sides)</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Features</div>
+          <div class="spec-value">Trusses, Windows, Foundation, Gutters, Tank</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Key Techniques</div>
+          <div class="spec-value">for-loop, modules, polygon, cylinder, rotate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills-section fade-in delay-2">
+    <div class="section-label">OpenSCAD Skills</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-name">Boolean Operations</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        <div class="skill-desc">union(), difference(), intersection() for complex geometry construction</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-name">2D → 3D Extrusion</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        <div class="skill-desc">linear_extrude, rotate_extrude to build 3D forms from 2D profiles</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-name">Parametric Scripting</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+        <div class="skill-desc">Variables, modules, for-loops, list comprehensions, flow control</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-name">Advanced Operations</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+        <div class="skill-desc">minkowski(), hull(), modifier characters, special variables ($fn, $fs)</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>Timothy Tiamapti &nbsp;·&nbsp; Computational CAD Engineer &nbsp;·&nbsp; Nairobi, Kenya</p>
+    <p style="margin-top:8px; font-family: 'Space Mono', monospace; font-size:11px; color:#444">// t.matayian@gmail.com</p>
+  </div>
+</footer>
+
+<script>
+function copyCode() {
+  const raw = `// ============================================================
+// PARAMETRIC ALUMINIUM WINDOW FRAME
+// Author  : Timothy Tiamapti
+// Version : 1.0
+// ============================================================
+
+frame_width      = 200;
+frame_height     = 150;
+frame_depth      = 60;
+wall_thickness   = 4;
+corner_radius    = 2;
+num_dividers     = 1;
+divider_thickness = 3;
+fn               = 64;
+
+inner_w = frame_width  - 2 * wall_thickness;
+inner_h = frame_height - 2 * wall_thickness;
+
+module rounded_rect(w, h, r) {
+    if (r > 0) {
+        minkowski() {
+            square([w - 2*r, h - 2*r], center=true);
+            circle(r, $fn=fn);
+        }
+    } else {
+        square([w, h], center=true);
+    }
+}
+
+module frame_shell() {
+    linear_extrude(height=frame_depth) {
+        difference() {
+            rounded_rect(frame_width, frame_height, corner_radius);
+            rounded_rect(inner_w, inner_h, max(0, corner_radius-wall_thickness));
+        }
+    }
+}
+
+module dividers() {
+    spacing = frame_height / (num_dividers + 1);
+    for (i = [1 : num_dividers]) {
+        y_pos = -frame_height/2 + i * spacing;
+        translate([0, y_pos, frame_depth/2])
+            cube([inner_w, divider_thickness, frame_depth], center=true);
+    }
+}
+
+module window_frame() {
+    color("silver", 0.9)
+    union() {
+        frame_shell();
+        dividers();
+    }
+}
+
+window_frame();`;
+  navigator.clipboard.writeText(raw).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'copied ✓';
+    btn.style.color = '#00d4aa';
+    btn.style.borderColor = '#00d4aa';
+    setTimeout(() => { btn.textContent = 'copy code'; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+  });
+}
+
+function copyCowshedCode() {
+  const code = `// PARAMETRIC COWSHED - Timothy Tiamapti
+stall_w=150; stall_d=250; stall_h=200; wall_t=10;
+num_stalls=5; path_w=120; water_d=80;
+shed_w = num_stalls * stall_w + 2 * wall_t;
+shed_d = 2 * stall_d + path_w + 2 * wall_t;
+
+module shed_walls() {
+  color("tan") difference() {
+    cube([shed_w,shed_d,stall_h]);
+    translate([wall_t,wall_t,0]) cube([shed_w-2*wall_t,shed_d-2*wall_t,stall_h]);
+    translate([wall_t,-1,stall_h*0.75]) cube([shed_w-2*wall_t,shed_d+2,stall_h*0.25]);
+    translate([-1,shed_d/2-75,0]) cube([wall_t+2,150,stall_h*0.75]);
+    translate([shed_w-wall_t-1,shed_d/2-75,0]) cube([wall_t+2,150,stall_h*0.75]);
+  }
+}
+module stall_divider() { cube([wall_t,stall_d,stall_h]); }
+module left_stalls() {
+  color("wheat") for(i=[1:num_stalls-1])
+    translate([wall_t+i*stall_w,wall_t,0]) stall_divider();
+  translate([wall_t,wall_t+stall_d,0]) cube([shed_w-2*wall_t,wall_t,stall_h]);
+}
+module right_stalls() {
+  color("burlywood") for(i=[1:num_stalls-1])
+    translate([wall_t+i*stall_w,shed_d-stall_d-wall_t,0]) stall_divider();
+  translate([wall_t,shed_d-stall_d-2*wall_t,0]) cube([shed_w-2*wall_t,wall_t,stall_h]);
+}
+module worker_path() {
+  color("gray",0.8) translate([0,stall_d+wall_t,0]) cube([shed_w,path_w,5]);
+}
+module water_trough() {
+  color("blue",0.7) translate([wall_t,shed_d-water_d-wall_t,0])
+  difference() {
+    cube([shed_w-2*wall_t,water_d,40]);
+    translate([wall_t,wall_t,wall_t]) cube([shed_w-4*wall_t,water_d-2*wall_t,40]);
+  }
+}
+module feeding_trough() {
+  color("brown",0.8) translate([wall_t,wall_t,0])
+  difference() {
+    cube([shed_w-2*wall_t,60,30]);
+    translate([wall_t,wall_t,wall_t]) cube([shed_w-4*wall_t,40,30]);
+  }
+}
+module roof() {
+  color("red",0.6) translate([0,0,stall_h]) {
+    cube([shed_w,shed_d,10]);
+    translate([0,0,10]) rotate([90,0,90])
+    linear_extrude(height=shed_w)
+      polygon([[0,0],[shed_d,0],[shed_d/2,shed_d/4]]);
+  }
+}
+module cowshed() {
+  shed_walls(); left_stalls(); right_stalls();
+  worker_path(); water_trough(); feeding_trough(); roof();
+}
+cowshed();`;
+  navigator.clipboard.writeText(code).then(() => {
+    const btns = document.querySelectorAll('.copy-btn');
+    btns.forEach(b => { if(b.onclick.toString().includes('Cowshed')) { b.textContent='copied ✓'; b.style.color='#00d4aa'; b.style.borderColor='#00d4aa'; setTimeout(()=>{b.textContent='copy code';b.style.color='';b.style.borderColor='';},2000); }});
+  });
+}
+
+</script>
+</body>
+</html>
